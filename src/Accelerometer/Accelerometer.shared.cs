@@ -107,9 +107,18 @@ namespace Microsoft.Maui.Devices.Sensors
 #if IOS || ANDROID
 			return new AccelerometerImplementation();
 #else
+			return GetDefaultDesktop();
+#endif
+		}
+
+		static IAccelerometer GetDefaultDesktop()
+		{
+#if WINDOWS
 			return OperatingSystemEx.IsWindows10()
 				? new WinAccelerometerImplementation()
-				: new NotImplementedAccelerometerImplementation();
+				? new NotImplementedAccelerometerImplementation();
+#else
+			return new NotImplementedAccelerometerImplementation();
 #endif
 		}
 	}
